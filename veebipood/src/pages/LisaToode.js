@@ -27,6 +27,8 @@ function LisaToode() {
       tooted.push(nimiRef.current.value);  // ["Tesla", "Nobe"]     ||    ["Nobe"]
       tooted = JSON.stringify(tooted);  //    "["Tesla", "Nobe"]"    ||     "["Nobe"]"
       localStorage.setItem("tooted", tooted);    // paneb ülemise väärtuse localStorage-sse
+      
+      nimiRef.current.value = "";
     }
   }
 

@@ -7,6 +7,7 @@ import Seaded from './pages/Seaded';
 import Meist from './pages/Meist';
 import Poed from './pages/Poed';
 import Koduleht from './pages/Koduleht';
+import Pildid from './pages/Pildid';
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
       <Link to="poed">
         <button>Meie poed</button>
       </Link>
+      <Link to="pildid">
+        <button>Pildid</button>
+      </Link>
 
       <Routes>
         <Route path="" element={ <Koduleht /> } />
@@ -41,6 +45,7 @@ function App() {
         <Route path="seaded" element={ <Seaded /> } />
         <Route path="meist" element={ <Meist /> } />
         <Route path="poed" element={ <Poed /> } />
+        <Route path="pildid" element={ <Pildid /> } />
       </Routes>
     </div>
   );
