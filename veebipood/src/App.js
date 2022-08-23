@@ -8,6 +8,9 @@ import Meist from './pages/Meist';
 import Poed from './pages/Poed';
 import Koduleht from './pages/Koduleht';
 import Pildid from './pages/Pildid';
+import YksikToode from './pages/YksikToode';
+import HaldaTooteid from './pages/HaldaTooteid';
+import MuudaToode from './pages/MuudaToode';
 
 function App() {
   return (
@@ -36,6 +39,9 @@ function App() {
       <Link to="pildid">
         <button>Pildid</button>
       </Link>
+      <Link to="halda-tooteid">
+        <button>Halda tooteid</button>
+      </Link>
 
       <Routes>
         <Route path="" element={ <Koduleht /> } />
@@ -46,6 +52,9 @@ function App() {
         <Route path="meist" element={ <Meist /> } />
         <Route path="poed" element={ <Poed /> } />
         <Route path="pildid" element={ <Pildid /> } />
+        <Route path="toode/:nimi" element={ <YksikToode /> } />
+        <Route path="halda-tooteid" element={ <HaldaTooteid /> } />
+        <Route path="muuda/:tooteNimi" element={ <MuudaToode /> } />
       </Routes>
     </div>
   );

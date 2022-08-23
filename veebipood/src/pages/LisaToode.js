@@ -6,6 +6,8 @@ function LisaToode() {
                           // esmakordne väärtus lehele minnes
   const [s6num, uuendaS6num] = useState("");  // useState ja useRef mõlemad importima (from react)
   const nimiRef = useRef(); // läheb alati input külge
+  const hindRef = useRef();
+  const aktiivsusRef = useRef();
   // const ingliseNimiRef = useRef();
 
   const sisesta = () => { // nupuvajutusel läheb käima see blokk loogelisest sulust loogelise suluni
@@ -24,11 +26,20 @@ function LisaToode() {
       // 5. panen selle väärtuse localStorage-sse tagasi
       let tooted = localStorage.getItem("tooted"); // saada kätte kõik varasemad väärtused 1) "["Tesla"]"  2) null
       tooted = JSON.parse(tooted) || [];  // ["Tesla"]   ||    []
-      tooted.push(nimiRef.current.value);  // ["Tesla", "Nobe"]     ||    ["Nobe"]
+      const uusToode = {
+        nimi: nimiRef.current.value, 
+        hind: Number(hindRef.current.value), 
+        aktiivsus: aktiivsusRef.current.checked
+      }
+      // {nimi: "Tesla", hind: "3123123", aktiivsus: true}
+      // "Tesla"
+      tooted.push(uusToode);  // ["Tesla", "Nobe"]     ||    ["Nobe"]
       tooted = JSON.stringify(tooted);  //    "["Tesla", "Nobe"]"    ||     "["Nobe"]"
       localStorage.setItem("tooted", tooted);    // paneb ülemise väärtuse localStorage-sse
       
       nimiRef.current.value = "";
+      hindRef.current.value = "";
+      aktiivsusRef.current.checked = false;
     }
   }
 
@@ -37,6 +48,10 @@ function LisaToode() {
       <div>{s6num}</div>
       <label>Toote nimi</label>
       <input ref={nimiRef} type="text" />
+      <label>Toote hind</label>
+      <input ref={hindRef} type="number" />
+      <label>Toote aktiivsus</label>
+      <input ref={aktiivsusRef} type="checkbox" />
       {/* <label>Toote inglise nimi</label>
       <input ref={ingliseNimiRef} type="text" /> */}
       <button onClick={sisesta}>Sisesta</button>
