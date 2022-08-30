@@ -61,7 +61,7 @@ function App() {
         <Route path="poed" element={ <Shops /> } />
         <Route path="ostukorv" element={ <Cart /> } />
         <Route path="admin/lisa-toode" element={ <AddProduct /> } />
-        <Route path="admin/muuda-toode" element={ <EditProduct /> } />
+        <Route path="admin/muuda-toode/:id" element={ <EditProduct /> } />
         <Route path="admin/halda-tooteid" element={ <MaintainProducts /> } />
         <Route path="admin/halda-poode" element={ <MaintainShops /> } />
         <Route path="admin/halda-kategooriaid" element={ <MaintainCategories /> } />

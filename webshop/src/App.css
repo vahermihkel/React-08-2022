@@ -1,0 +1,6 @@
+/* teen ühele kindlale klassile ühes kindlas failis */
+
+.active-category {
+  font-weight: bold;
+  text-decoration: underline;
+}
