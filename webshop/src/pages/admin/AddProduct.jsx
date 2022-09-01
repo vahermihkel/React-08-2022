@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import productsFromFile from "../../data/products.json";
+import { useEffect, useRef, useState } from "react";
+// import productsFromFile from "../../data/products.json";
 import { ToastContainer, toast } from 'react-toastify';
 
 function AddProduct() {
@@ -10,6 +10,18 @@ function AddProduct() {
   const categoryRef = useRef();
   const imageRef = useRef();
   const activeRef = useRef();
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => { 
+    fetch("https://react0822-default-rtdb.europe-west1.firebasedatabase.app/products.json")
+      .then(res => res.json())
+      .then(data => setProducts(data || []));
+
+    fetch("https://react0822-default-rtdb.europe-west1.firebasedatabase.app/categories.json")
+      .then(res => res.json())
+      .then(data => setCategories(data || []));
+  }, []);
 
   const addNewProduct = () => {
     const newProduct = {
@@ -21,7 +33,12 @@ function AddProduct() {
       image: imageRef.current.value,
       active: activeRef.current.checked,
     }
-    productsFromFile.push(newProduct);
+    // productsFromFile.push(newProduct);
+    products.push(newProduct);
+    fetch("https://react0822-default-rtdb.europe-west1.firebasedatabase.app/products.json", {
+      method: "PUT",
+      body: JSON.stringify(products)
+    })
     idRef.current.value = "";
     nameRef.current.value = "";
     priceRef.current.value = "";
@@ -44,7 +61,12 @@ function AddProduct() {
       <label>Kirjeldus</label> <br />
       <input ref={descriptionRef} type="text" /> <br />
       <label>Kategooria</label> <br />
-      <input ref={categoryRef} type="text" /> <br />
+      <select ref={categoryRef}>
+        {categories.map(element => <option key={element.name}>{element.name}</option>)}
+        {/* <option value="">speakers</option>
+        <option value="">samsung</option> */}
+      </select> <br />
+      {/* <input ref={categoryRef} type="text" /> <br /> */}
       <label>Pilt</label> <br />
       <input ref={imageRef} type="text" /> <br />
       <label>Aktiivne</label> <br />

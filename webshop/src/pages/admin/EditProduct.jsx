@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import productsFromFile from "../../data/products.json";
+// import productsFromFile from "../../data/products.json";
 
 function EditProduct() {
   const idRef = useRef();
@@ -13,8 +13,21 @@ function EditProduct() {
   const navigate = useNavigate();
   const { id } = useParams(); // useParamsist tulenevad väärtused on stringi kujul
   // .find() <-- leian id abil õige üles
-  const productFound = productsFromFile.find(element => element.id === Number(id));
-  const index = productsFromFile.indexOf(productFound);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  const productFound = products.find(element => element.id === Number(id));
+  const index = products.indexOf(productFound);
+
+  useEffect(() => { // uef algus
+    fetch("https://react0822-default-rtdb.europe-west1.firebasedatabase.app/products.json")
+      .then(res => res.json())
+      .then(data => setProducts(data || []));
+
+    fetch("https://react0822-default-rtdb.europe-west1.firebasedatabase.app/categories.json")
+      .then(res => res.json())
+      .then(data => setCategories(data || []));
+  }, []);
 
   const updateProduct = () => {
     const newProduct = {
@@ -26,8 +39,11 @@ function EditProduct() {
       image: imageRef.current.value,
       active: activeRef.current.checked,
     }
-    productsFromFile[index] = newProduct;
-    navigate("/admin/halda-tooteid");
+    products[index] = newProduct;
+    fetch("https://react0822-default-rtdb.europe-west1.firebasedatabase.app/products.json", {
+      method: "PUT",
+      body: JSON.stringify(products)
+    }).then(() => navigate("/admin/halda-tooteid"))
   }
 
   return ( 
@@ -43,7 +59,9 @@ function EditProduct() {
       <label>Kirjeldus</label> <br />
       <input ref={descriptionRef} defaultValue={productFound.description} type="text" /> <br />
       <label>Kategooria</label> <br />
-      <input ref={categoryRef} defaultValue={productFound.category} type="text" /> <br />
+      <select ref={categoryRef} defaultValue={productFound.category}>
+        {categories.map(element => <option key={element.name}>{element.name}</option>)}
+      </select> <br />
       <label>Pilt</label> <br />
       <input ref={imageRef} defaultValue={productFound.image} type="text" /> <br />
       <label>Aktiivne</label> <br />
