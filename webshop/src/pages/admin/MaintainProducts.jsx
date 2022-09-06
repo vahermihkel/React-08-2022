@@ -25,7 +25,7 @@ function MaintainProducts() {
   return ( 
     <div>
       {products.map((element,index) => 
-        <div>
+        <div key={element.id}>
           <div>{element.id}</div>
           <div>{element.name}</div>
           <div>{element.price}</div>

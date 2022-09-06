@@ -1,0 +1,52 @@
+.product {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10%;
+  border-bottom: 1px solid gray;
+  padding: 10px 0;
+}
+
+.image {
+  height: 100px;
+  width: 100px;
+}
+
+.name {
+  width: 300px;
+}
+
+.price {
+  width: 70px;
+}
+
+.quantityControls {
+  display: flex;
+  text-align: center;
+  border: 1px solid gray;
+  height: 39px;
+  border-radius: 20px;
+  padding: 3px;
+}
+
+.quantity {
+  width: 50px;
+}
+
+.total {
+  width: 70px;
+}
+
+.button {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.7;
+}
+
+.info {
+  text-align: right;
+  margin: 0 10%;  
+}

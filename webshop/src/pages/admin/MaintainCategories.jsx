@@ -56,7 +56,7 @@ function MaintainCategories() {
     <button disabled={isUnique === false} onClick={addNewCategory}>Lisa uus kategooria</button>
 
     {categories.map((element,index) => 
-      <div>
+      <div key={element.name}>
           {element.name} 
           <button onClick={() => deleteCategory(index)}>x</button> 
       </div>)}
