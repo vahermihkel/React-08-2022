@@ -15,6 +15,7 @@ function EditProduct() {
   // .find() <-- leian id abil õige üles
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [idUnique, setIdUnique] = useState(true);
 
   const productFound = products.find(element => element.id === Number(id));
   const index = products.indexOf(productFound);
@@ -46,12 +47,25 @@ function EditProduct() {
     }).then(() => navigate("/admin/halda-tooteid"))
   }
 
+  const checkIdUniqueness = () => {
+    // 0,1,2,3,4,5,6....        kui ei ole: -1
+    const index = products.findIndex(element => element.id === Number(idRef.current.value));
+    if (index >= 0 && productFound.id !== Number(idRef.current.value)) {
+      // EI OLE UNIKAALNE!
+      setIdUnique(false);
+    } else {
+      // ON UNIKAALNE!
+      setIdUnique(true);
+    }
+  }
+
   return ( 
   <div>
     {productFound !== undefined && 
     <div>
+      { idUnique === false && <div>Sisestasid mitteunikaalse ID!</div>}
       <label>ID</label> <br />
-      <input ref={idRef} defaultValue={productFound.id} type="number" /> <br />
+      <input onChange={checkIdUniqueness} ref={idRef} defaultValue={productFound.id} type="number" /> <br />
       <label>Nimi</label> <br />
       <input ref={nameRef} defaultValue={productFound.name} type="text" /> <br />
       <label>Hind</label> <br />
@@ -66,7 +80,7 @@ function EditProduct() {
       <input ref={imageRef} defaultValue={productFound.image} type="text" /> <br />
       <label>Aktiivne</label> <br />
       <input ref={activeRef} defaultChecked={productFound.active} type="checkbox" /> <br />
-      <button onClick={updateProduct}>Muuda toode</button>
+      <button disabled={idUnique === false} onClick={updateProduct}>Muuda toode</button>
     </div>}
     {productFound === undefined && <div>Toodet ei leitud</div> }
   </div> );

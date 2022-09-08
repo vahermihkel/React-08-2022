@@ -14,3 +14,7 @@
   opacity: 0.7;
   cursor: pointer;
 }
+
+.map {
+  height: 400px;
+}

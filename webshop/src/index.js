@@ -2,6 +2,7 @@ import React from 'react'; // nodu_modules kaustast import kuna kirjutatakse ilm
 import ReactDOM from 'react-dom/client'; // nodu_modules
 import 'bootstrap/dist/css/bootstrap.min.css'; // nodu_modules
 import 'react-toastify/dist/ReactToastify.css';
+import 'leaflet/dist/leaflet.css';
 import './index.css'; // src sees
 import './i18n'; // src sees
 import App from './App'; // src sees

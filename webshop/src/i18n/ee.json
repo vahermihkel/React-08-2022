@@ -2,5 +2,11 @@
   "navbar.admin-button": "Admin vaatesse",
   "navbar.about-button": "Meist",
   "navbar.shops-button": "Poed",
-  "navbar.cart-button": "Ostukorv"
+  "navbar.cart-button": "Ostukorv",
+  "filter.all-categories": "Kõik kategooriad",
+  "sort.az": "Sorteeri A-Z",
+  "sort.za": "Sorteeri Z-A",
+  "sort.price-asc": "Sorteeri hind kasvavalt",
+  "sort.price-desc": "Sorteeri hind kahanevalt",
+  "toast.cart-added": "Edukalt ostukorvi lisatud!"
 }

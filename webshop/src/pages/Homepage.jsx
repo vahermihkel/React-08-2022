@@ -2,10 +2,13 @@
 import Button from 'react-bootstrap/Button'; 
 import { useEffect, useState } from "react";
 import Spinner from '../components/Spinner';
+import { ToastContainer, toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 function HomePage() {
   const [products, setProducts] = useState([]); // <--- seda muudan
   const [dbProducts, setDbProducts] = useState([]); // <--- seda ei muuda kunagi
+  const { t } = useTranslation();
   
   // [{},{},{}]
   // ["","",""]
@@ -48,6 +51,10 @@ function HomePage() {
     }
     cart = JSON.stringify(cart);
     sessionStorage.setItem("cart", cart);
+    toast.success(t("toast.cart-added"), {
+      theme: "dark",
+      position: "bottom-right"
+    });
   }
 
   const filterByCategory = (categoryClicked) => {
@@ -83,10 +90,11 @@ function HomePage() {
 
   return ( 
   <div>
+    <ToastContainer />
     <div> <i>Üksiku toote vaatamine kodus</i> </div>
     <div className={activeCategory === "all" ? "active-category": undefined} 
       onClick={() => filterByCategory('all')}>
-        Kõik kategooriad
+        {t("filter.all-categories")}
     </div>
     <div>{categories.map(element => 
       <div key={element} 
@@ -96,10 +104,10 @@ function HomePage() {
       </div>)}
     </div>
     
-    <button onClick={sortAZ}>Sort A-Z</button>
-    <button onClick={sortZA}>Sort Z-A</button>
-    <button onClick={sortPriceAsc}>Sort price ascending</button>
-    <button onClick={sortPriceDesc}>Sort price descending</button>
+    <button onClick={sortAZ}>{t("sort.az")}</button>
+    <button onClick={sortZA}>{t("sort.za")}</button>
+    <button onClick={sortPriceAsc}>{t("sort.price-asc")}</button>
+    <button onClick={sortPriceDesc}>{t("sort.price-desc")}</button>
 
     <div>{products.length} tk</div>
 

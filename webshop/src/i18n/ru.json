@@ -1,6 +1,12 @@
 {
-  "navbar.admin-button": "Admin vaatesse RUS",
-  "navbar.about-button": "Meist RUS",
-  "navbar.shops-button": "Poed RUS",
-  "navbar.cart-button": "Ostukorv RUS"
+  "navbar.admin-button": "Для просмотра администратором",
+  "navbar.about-button": "О нас",
+  "navbar.shops-button": "Магазины",
+  "navbar.cart-button": "Корзина",
+  "filter.all-categories": "Все категории",
+  "sort.az": "Сортировать от А до Z",
+  "sort.za": "Сортировать от Z до A",
+  "sort.price-asc": "Сортировать цену по возрастанию",
+  "sort.price-desc": "Сортировать цену по убыванию",
+  "toast.cart-added": "Успешно добавлено в корзину"
 }

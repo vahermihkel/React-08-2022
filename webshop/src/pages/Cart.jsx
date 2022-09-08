@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { useRef } from "react";
+import { useEffect, useState } from "react";
 import styles from "../css/Cart.module.css";
 
 function Cart() {
   const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem("cart")) || []);
+  const [parcelMachines, setParcelMachines] = useState([]);
+  const pmRef = useRef();
+
+  useEffect(() => {
+    fetch("https://www.omniva.ee/locations.json")
+      .then(res => res.json())
+      .then(data => setParcelMachines(data.filter(e => e.A0_NAME === "EE")))
+  }, []);
 
   // eemaldamine ostukorvist
   const removeFromCart = (index) => {
@@ -47,6 +56,12 @@ function Cart() {
     sessionStorage.setItem("cart", JSON.stringify(cart));
   }
 
+  const [selectedPM, setSelectedPM] = useState("");
+
+  const pmSelected = () => {
+    setSelectedPM(pmRef.current.value);
+  }
+
   return ( 
   <div>
     {/* Ostukorvis on 4 eset */}
@@ -68,8 +83,15 @@ function Cart() {
         <img className={styles.button} onClick={() => removeFromCart(index)} src={require("../images/delete.png")} alt="" />
       </div>
     )}
-   { cart.length > 0 && <div className={styles.info}>{calculateCartSum()} €</div>}
+    <div className={styles.info}>
+      <select onChange={pmSelected} ref={pmRef}>
+        { parcelMachines.map(element => <option>{element.NAME}</option>) }
+      </select>
+    </div>
+    { selectedPM !== "" && <div className={styles.info}>Valitud pakiautomaat: {selectedPM}</div>}
+    { cart.length > 0 && <div className={styles.info}>{calculateCartSum()} €</div>}
 
+   
    {/* reactis: props */}
   </div> );
 }
