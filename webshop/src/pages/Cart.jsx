@@ -51,7 +51,7 @@ function Cart() {
   }
 
   const increaseQuantity = (index) => {
-    cart[index].quantity = cart[index].quantity - 1;
+    cart[index].quantity = cart[index].quantity + 1;
     setCart(cart.slice());
     sessionStorage.setItem("cart", JSON.stringify(cart));
   }
@@ -83,12 +83,13 @@ function Cart() {
         <img className={styles.button} onClick={() => removeFromCart(index)} src={require("../images/delete.png")} alt="" />
       </div>
     )}
-    <div className={styles.info}>
-      <select onChange={pmSelected} ref={pmRef}>
-        { parcelMachines.map(element => <option>{element.NAME}</option>) }
-      </select>
-    </div>
-    { selectedPM !== "" && <div className={styles.info}>Valitud pakiautomaat: {selectedPM}</div>}
+    { cart.length > 0 && 
+      <div className={styles.info}>
+        <select onChange={pmSelected} ref={pmRef}>
+          { parcelMachines.map(element => <option>{element.NAME}</option>) }
+        </select>
+        { selectedPM !== "" && <div className={styles.info}>Valitud pakiautomaat: {selectedPM}</div>} 
+      </div>}
     { cart.length > 0 && <div className={styles.info}>{calculateCartSum()} €</div>}
 
    

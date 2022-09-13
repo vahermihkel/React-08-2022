@@ -4,11 +4,16 @@ import { useEffect, useState } from "react";
 import Spinner from '../components/Spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import CarouselGallery from '../components/CarouselGallery';
+import SortButtons from '../components/SortButtons';
+import PageButtons from '../components/PageButtons';
 
 function HomePage() {
-  const [products, setProducts] = useState([]); // <--- seda muudan
-  const [dbProducts, setDbProducts] = useState([]); // <--- seda ei muuda kunagi
+  const [products, setProducts] = useState([]); // <--- seda muudan 20tk
+  const [filteredProducts, setFilteredProducts] = useState([]);  //  100tk 50tk  70tk
+  const [dbProducts, setDbProducts] = useState([]); // <--- seda ei muuda kunagi 237tk
   const { t } = useTranslation();
+  const [activePage, setActivePage] = useState(1);
   
   // [{},{},{}]
   // ["","",""]
@@ -16,21 +21,12 @@ function HomePage() {
   const categories = [...new Set(dbProducts.map(element => element.category))];
   const [activeCategory, setActiveCategory] = useState("all");
 
-        //   {    "scraping" python
-        //     id: number;   <-- unikaalsuse jaoks
-        //     image: string; <-- pildi väljanäitamise jaoks
-        //     name: string; <-- nime väljanäitamise jaoks
-        //     price: number; <-- hinna väljanäitamise jaoks + ostukorvis kokkuarvutamine
-        //     description: string; <-- avalehel toote kirjeldust ei näe, aga toote peale klikkides näeb
-        //     category: string; // <-- saan kategooriate lõikes filterdada 
-        //     active: boolean; <-- näidatakse aktiivseid/mitteaktiivseid avalehel
-        // }
-
   useEffect(() => { // uef algus
     fetch("https://react0822-default-rtdb.europe-west1.firebasedatabase.app/products.json")
       .then(res => res.json())
       .then(data => {
-        setProducts(data || []);
+        setProducts(data.slice(0,20) || []);
+        setFilteredProducts(data || []);
         setDbProducts(data || []);
         });
   }, []); 
@@ -59,39 +55,30 @@ function HomePage() {
 
   const filterByCategory = (categoryClicked) => {
     if (categoryClicked === 'all') {
-      setProducts(dbProducts);
+      setProducts(dbProducts.slice(0,20)); // 20 toodet lehele
+      setFilteredProducts(dbProducts); // 237
       setActiveCategory("all");
     } else {
       const result = dbProducts.filter(element => element.category === categoryClicked);
-      setProducts(result);
+      setProducts(result.slice(0,20)); // 20 toodet
+      setFilteredProducts(result); // mitu tk neid on
       setActiveCategory(categoryClicked);
     }  
+    setActivePage(1);
   }
 
-  const sortAZ = () => {
-    products.sort((a,b) => a.name.localeCompare(b.name));
-    setProducts(products.slice());
-  }
-
-  const sortZA = () => {
-    products.sort((a,b) => b.name.localeCompare(a.name));
-    setProducts(products.slice());
-  }
-
-  const sortPriceAsc = () => {
-    products.sort((a,b) => a.price - b.price);
-    setProducts(products.slice());
-  }
-
-  const sortPriceDesc = () => {
-    products.sort((a,b) => b.price - a.price);
-    setProducts(products.slice());
+  const changePage = (newPage) => {
+    setActivePage(newPage);
+    setProducts(filteredProducts.slice(20*newPage-20,20*newPage));
   }
 
   return ( 
   <div>
-    <ToastContainer />
     <div> <i>Üksiku toote vaatamine kodus</i> </div>
+     <ToastContainer />
+
+     <CarouselGallery />
+
     <div className={activeCategory === "all" ? "active-category": undefined} 
       onClick={() => filterByCategory('all')}>
         {t("filter.all-categories")}
@@ -104,14 +91,21 @@ function HomePage() {
       </div>)}
     </div>
     
-    <button onClick={sortAZ}>{t("sort.az")}</button>
-    <button onClick={sortZA}>{t("sort.za")}</button>
-    <button onClick={sortPriceAsc}>{t("sort.price-asc")}</button>
-    <button onClick={sortPriceDesc}>{t("sort.price-desc")}</button>
+   <SortButtons
+        fProducts={filteredProducts}
+        setFProducts={setFilteredProducts}
+        changePage={changePage}
+        activePage={activePage}
+   />
 
-    <div>{products.length} tk</div>
+    <div>{filteredProducts.length} tk</div>
 
     {products.length === 0 && <Spinner />}
+
+    <PageButtons
+      fProducts={filteredProducts}
+      changePage={changePage}
+      activePage={activePage} />
 
     {products.map(element => 
       <div key={element.id}>
@@ -120,6 +114,12 @@ function HomePage() {
         <div>{element.price}</div>
         <Button onClick={() => addToCart(element)}>Lisa ostukorvi</Button>
       </div>)}
+
+    <PageButtons
+      fProducts={filteredProducts}
+      changePage={changePage}
+      activePage={activePage} />
+
   </div> );
 }
 
