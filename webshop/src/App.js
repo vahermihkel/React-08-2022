@@ -11,17 +11,20 @@ import MaintainProducts from "./pages/admin/MaintainProducts";
 import MaintainShops from "./pages/admin/MaintainShops";
 import MaintainCategories from "./pages/admin/MaintainCategories";
 import NavigationBar from "./components/NavigationBar";
+import { useTranslation } from 'react-i18next';
 
 function App() {
+  const { t } = useTranslation();
+
   return (
     <div >
       <NavigationBar />
       <Routes>
         <Route path="" element={ <HomePage /> } />
-        <Route path="admin" element={ <AdminHome /> } />
-        <Route path="meist" element={ <AboutUs /> } />
-        <Route path="poed" element={ <Shops /> } />
-        <Route path="ostukorv" element={ <Cart /> } />
+        <Route path={t("url.admin")} element={ <AdminHome /> } />
+        <Route path={t("url.about")} element={ <AboutUs /> } />
+        <Route path={t("url.shops")} element={ <Shops /> } />
+        <Route path={t("url.cart")} element={ <Cart /> } />
         <Route path="admin/lisa-toode" element={ <AddProduct /> } />
         <Route path="admin/muuda-toode/:id" element={ <EditProduct /> } />
         <Route path="admin/halda-tooteid" element={ <MaintainProducts /> } />

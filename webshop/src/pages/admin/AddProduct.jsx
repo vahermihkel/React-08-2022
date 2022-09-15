@@ -13,6 +13,7 @@ function AddProduct() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [idUnique, setIdUnique] = useState(true);
+  const [message, setMessage] = useState("");
 
   useEffect(() => { 
     fetch("https://react0822-default-rtdb.europe-west1.firebasedatabase.app/products.json")
@@ -24,7 +25,24 @@ function AddProduct() {
       .then(data => setCategories(data || []));
   }, []);
 
+  const checkIfFilled = (ref, errorMessage) => {
+      if (ref.current.value === "") { // kui on tõsi, läheb alla blokki sisse
+        setMessage(errorMessage);
+        return true; // tagastatakse true
+      }
+  }
+
   const addNewProduct = () => {
+    const descNotFilled = checkIfFilled(descriptionRef, "Kirjeldus on täitmata"); // true liigub vasakpoolse muutuja sisse
+    const imageNotFilled = checkIfFilled(imageRef, "Pilt on täitmata");
+    const priceNotFilled = checkIfFilled(priceRef, "Hind on täitmata");
+    const nameNotFilled = checkIfFilled(nameRef, "Nimi on täitmata");
+    const idNotFilled = checkIfFilled(idRef, "ID on täitmata");
+
+    if (idNotFilled || nameNotFilled || priceNotFilled || imageNotFilled || descNotFilled) {
+      return; // takistab funktsioonil edasi minna --> funktsioon lõpetab alati return alusel töö
+    }
+
     const newProduct = {
       id: Number(idRef.current.value), // ref saab jutumärkides väärtuse
       name: nameRef.current.value,
@@ -65,6 +83,7 @@ function AddProduct() {
   return ( 
     <div>
       <ToastContainer />
+      <div>{message}</div>
       { idUnique === false && <div>Sisestasid mitteunikaalse ID!</div>}
       <label>ID</label> <br />
       <input onChange={checkIdUniqueness} ref={idRef} type="number" /> <br />

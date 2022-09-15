@@ -24,3 +24,15 @@
   /* text-align: center; */
   margin: auto;
 }
+
+.active-product {
+  border: 1px solid green;
+}
+
+.inactive-product {
+  border: 1px solid red;
+}
+
+.active-product, .inactive-product {
+  margin: 1px 10%;
+}

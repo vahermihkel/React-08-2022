@@ -8,5 +8,9 @@
   "sort.za": "Sorteeri Z-A",
   "sort.price-asc": "Sorteeri hind kasvavalt",
   "sort.price-desc": "Sorteeri hind kahanevalt",
-  "toast.cart-added": "Edukalt ostukorvi lisatud!"
+  "toast.cart-added": "Edukalt ostukorvi lisatud!",
+  "url.admin": "admin",
+  "url.about": "meist",
+  "url.shops": "poed",
+  "url.cart": "ostukorv"
 }

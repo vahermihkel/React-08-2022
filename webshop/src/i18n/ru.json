@@ -8,5 +8,9 @@
   "sort.za": "Сортировать от Z до A",
   "sort.price-asc": "Сортировать цену по возрастанию",
   "sort.price-desc": "Сортировать цену по убыванию",
-  "toast.cart-added": "Успешно добавлено в корзину"
+  "toast.cart-added": "Успешно добавлено в корзину",
+  "url.admin": "administratorom",
+  "url.about": "o-nac",
+  "url.shops": "magazina",
+  "url.cart": "korzina"
 }
