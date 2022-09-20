@@ -1,11 +1,14 @@
 import { useRef } from "react";
+import { useContext } from "react";
 import { useEffect, useState } from "react";
 import styles from "../css/Cart.module.css";
+import CartSumContext from "../store/CartSumContext";
 
 function Cart() {
   const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem("cart")) || []);
   const [parcelMachines, setParcelMachines] = useState([]);
   const pmRef = useRef();
+  const cartSumCtx = useContext(CartSumContext);
 
   useEffect(() => {
     fetch("https://www.omniva.ee/locations.json")
@@ -18,6 +21,7 @@ function Cart() {
     cart.splice(index,1);
     setCart(cart.slice());
     sessionStorage.setItem("cart", JSON.stringify(cart));
+    cartSumCtx.setCartSum(calculateCartSum());
   }
 
   // ostukorvi kogusumma
@@ -37,6 +41,7 @@ function Cart() {
   const emptyCart = () => {
     setCart([]);
     sessionStorage.setItem("cart", JSON.stringify([]));
+    cartSumCtx.setCartSum(0);
   }
 
   // HTML-s ostukorvi esemete tk näitamine
@@ -48,12 +53,14 @@ function Cart() {
     }
     setCart(cart.slice());
     sessionStorage.setItem("cart", JSON.stringify(cart));
+    cartSumCtx.setCartSum(calculateCartSum());
   }
 
   const increaseQuantity = (index) => {
     cart[index].quantity = cart[index].quantity + 1;
     setCart(cart.slice());
     sessionStorage.setItem("cart", JSON.stringify(cart));
+    cartSumCtx.setCartSum(calculateCartSum());
   }
 
   const [selectedPM, setSelectedPM] = useState("");

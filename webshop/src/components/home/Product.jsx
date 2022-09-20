@@ -1,9 +1,12 @@
 import Button from 'react-bootstrap/Button'; 
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import CartSumContext from '../../store/CartSumContext';
+import { useContext } from 'react';
 
 function Product(props) {
   const { t } = useTranslation();
+  const cartSumCtx = useContext(CartSumContext);
 
                       //{product} --> {product: {id: 312, name: "dasd"}, quantity: 1}
   const addToCart = (productClicked) => {
@@ -19,6 +22,10 @@ function Product(props) {
     } else {
       cart.push({product: productClicked, quantity: 1}); // [{},{},{product}]
     }
+    let cartSum = 0;
+    cart.forEach(element => cartSum = cartSum + element.product.price * element.quantity);
+    cartSumCtx.setCartSum(cartSum.toFixed(2));
+
     cart = JSON.stringify(cart);
     sessionStorage.setItem("cart", cart);
     toast.success(t("toast.cart-added"), {

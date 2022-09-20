@@ -17,7 +17,7 @@ function HomePage() {
   // [{},{},{}]
   // ["","",""]
   // js get unique values from array -> [...new Set([1,1,2])]  -> [1,2]
-  const categories = [...new Set(dbProducts.map(element => element.category))];
+  const categories = [...new Set(dbProducts.map(element => element.category))].sort();
   const [activeCategory, setActiveCategory] = useState("all");
 
   useEffect(() => { // uef algus
