@@ -12,5 +12,11 @@
   "url.admin": "admin",
   "url.about": "meist",
   "url.shops": "poed",
-  "url.cart": "ostukorv"
+  "url.cart": "ostukorv",
+  "INVALID_EMAIL": "Vale kujuga e-mail",
+  "EMAIL_NOT_FOUND": "Sellise e-mailiga kasutajat ei eksisteeri",
+  "MISSING_PASSWORD": "Parool puudub",
+  "INVALID_PASSWORD": "Vale parool",
+  "EMAIL_EXISTS": "Sellise e-mailiga on kasutaja juba olemas",
+  "WEAK_PASSWORD : Password should be at least 6 characters": "Nõrk parool: parool peab olema vähemalt 6 tähte"
 }

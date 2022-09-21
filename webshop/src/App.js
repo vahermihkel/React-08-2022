@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import Login from "./pages/Login";
 import AuthContext from "./store/AuthContext";
 import { useContext } from "react";
+import Signup from "./pages/admin/Signup";
 
 function App() {
   const { t } = useTranslation();
@@ -32,6 +33,7 @@ function App() {
         { authCtx.loggedIn === true && <>
           <Route path={t("url.admin")} element={ <AdminHome /> } />
           <Route path="admin/lisa-toode" element={ <AddProduct /> } />
+          <Route path="admin/lisa-kasutaja" element={ <Signup /> } />
           <Route path="admin/muuda-toode/:id" element={ <EditProduct /> } />
           <Route path="admin/halda-tooteid" element={ <MaintainProducts /> } />
           <Route path="admin/halda-poode" element={ <MaintainShops /> } />

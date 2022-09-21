@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useEffect, useState } from "react";
 import styles from "../css/Cart.module.css";
 import CartSumContext from "../store/CartSumContext";
+import emailjs from 'emailjs-com';
 
 function Cart() {
   const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem("cart")) || []);
@@ -15,6 +16,30 @@ function Cart() {
       .then(res => res.json())
       .then(data => setParcelMachines(data.filter(e => e.A0_NAME === "EE")))
   }, []);
+
+  const sendEmail = () => {
+
+    // emailjs.sendForm('service_opxsefn', 'template_cxiuwse', calculateCartSum(), 'Xbn0xj_4LjNugxYGl')
+    //   .then((result) => {
+    //       console.log(result.text);
+    //   }, (error) => {
+    //       console.log(error.text);
+    //   });
+    const templateParams = {
+      message: "Keegi tegi tellimuse summas: " + calculateCartSum(),  // Saime sinu tellimuse ilusti kätte, saadame koheselt kui on makstud.
+      from_name: 'Mihkel', // nameRef.current.value
+      to_name: "Webshop", 
+      // from_email: fromEmailRef.current.value
+    };
+   
+    emailjs.send('service_opxsefn', 'template_cxiuwse', templateParams, 'Xbn0xj_4LjNugxYGl')
+      .then(function(response) {
+         console.log('SUCCESS!', response.status, response.text);
+      }, function(error) {
+         console.log('FAILED...', error);
+      });
+
+  };
 
   // eemaldamine ostukorvist
   const removeFromCart = (index) => {
@@ -99,8 +124,7 @@ function Cart() {
       </div>}
     { cart.length > 0 && <div className={styles.info}>{calculateCartSum()} €</div>}
 
-   
-   {/* reactis: props */}
+      <button onClick={sendEmail}>Kinnita tellimus</button>
   </div> );
 }
 

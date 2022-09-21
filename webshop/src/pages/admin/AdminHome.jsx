@@ -22,6 +22,9 @@ function AdminHome() {
     <Link to="/admin/halda-kategooriaid">
       <Button>Halda kategooriaid</Button>
     </Link>  
+    <Link to="/admin/lisa-kasutaja">
+      <Button>Lisa kasutaja</Button>
+    </Link>  
   </div> );
 }
 

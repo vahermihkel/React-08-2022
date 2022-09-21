@@ -12,5 +12,11 @@
   "url.admin": "admin",
   "url.about": "about",
   "url.shops": "shops",
-  "url.cart": "cart"
+  "url.cart": "cart",
+  "INVALID_EMAIL": "Invalid email",
+  "EMAIL_NOT_FOUND": "Email not found",
+  "MISSING_PASSWORD": "Missing password",
+  "INVALID_PASSWORD": "Invalid password",
+  "EMAIL_EXISTS": "Email exists",
+  "WEAK_PASSWORD : Password should be at least 6 characters": "Weak password: Password should be at least 6 characters"
 }
